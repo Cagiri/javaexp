@@ -70,7 +70,6 @@ public class TestConnection {
        } catch (SQLException e) {
            e.printStackTrace();
        } catch (ClassNotFoundException e1) {
-		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	} finally {
            try {
