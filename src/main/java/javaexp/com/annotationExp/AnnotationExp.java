@@ -9,7 +9,6 @@ public class AnnotationExp {
 	
 	public static void main(String[] args) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
 		
-		
 		Class<AnnotationExpBean> obj = AnnotationExpBean.class;
 		
 		for (Field f : obj.getDeclaredFields()) {
