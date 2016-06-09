@@ -29,12 +29,12 @@ public class FirstSqlLiteExp {
 			e1.printStackTrace();
 		}
 
-		try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db");
+		try (Connection c = DriverManager.getConnection("jdbc:sqlite:test2.db");
 				Statement stmt = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)) {
 
 			// getConnWarnings(c);
 
-			// createStatement(c, stmt);
+//			 createStatement(c, stmt);
 
 			// insertStatement(c, stmt);
 
@@ -83,12 +83,7 @@ public class FirstSqlLiteExp {
 		ps.setInt(1, 1);
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
-			System.out.print(leftJustify(String.valueOf(rs.getInt("ID"))));
-			System.out.print(leftJustify(rs.getString("NAME")));
-			System.out.print(leftJustify(String.valueOf(rs.getInt("AGE"))));
-			System.out.print(leftJustify(rs.getString("ADDRESS")));
-			System.out.print(leftJustify(String.valueOf(rs.getDouble("SALARY"))));
-			System.out.println("");
+			writeRows(rs);
 		}
 	}
 
@@ -138,13 +133,19 @@ public class FirstSqlLiteExp {
 		ResultSet rs = stmt.executeQuery(sql);
 		getColumns(rs);
 		rs.absolute(5);
+		writeRows(rs);
+
+	}
+
+
+
+	public static void writeRows(ResultSet rs) throws SQLException {
 		System.out.print(leftJustify(String.valueOf(rs.getInt("ID"))));
 		System.out.print(leftJustify(rs.getString("NAME")));
 		System.out.print(leftJustify(String.valueOf(rs.getInt("AGE"))));
 		System.out.print(leftJustify(rs.getString("ADDRESS")));
 		System.out.print(leftJustify(String.valueOf(rs.getDouble("SALARY"))));
 		System.out.println("");
-
 	}
 
 	private static String leftJustify(String s) {
@@ -152,7 +153,7 @@ public class FirstSqlLiteExp {
 		return String.format("%1$-20S", s);
 	}
 
-	private static void selectRowCount(Connection c, Statement stmt) throws SQLException {
+	public static void selectRowCount(Connection c, Statement stmt) throws SQLException {
 
 		boolean control = false;
 		String sql = "select * from company order by id";
@@ -160,35 +161,25 @@ public class FirstSqlLiteExp {
 		if (control) {
 			ResultSet rs = stmt.getResultSet();
 			getColumns(rs);
-			System.out.println();
 			while (rs.next()) {
-				System.out.print(leftJustify(String.valueOf(rs.getInt("ID"))));
-				System.out.print(leftJustify(rs.getString("NAME")));
-				System.out.print(leftJustify(String.valueOf(rs.getInt("AGE"))));
-				System.out.print(leftJustify(rs.getString("ADDRESS")));
-				System.out.print(leftJustify(String.valueOf(rs.getDouble("SALARY"))));
-				System.out.println("");
+				writeRows(rs);
 			}
 		}
 	}
 
-	private static void getColumns(ResultSet rs) throws SQLException {
+	public static void getColumns(ResultSet rs) throws SQLException {
 		ResultSetMetaData rm = rs.getMetaData();
 		for (int i = 1; i <= rm.getColumnCount(); i++) {
 			System.out.print(leftJustify(rm.getColumnName(i)));
 		}
+		System.out.println();
 	}
 
 	private static void selectStatement(Connection c, Statement stmt) throws SQLException {
 		String sql = "select * from company order by id";
 		ResultSet rs = stmt.executeQuery(sql);
 		while (rs.next()) {
-			System.out.print(leftJustify(String.valueOf(rs.getInt("ID"))));
-			System.out.print(leftJustify(rs.getString("NAME")));
-			System.out.print(leftJustify(String.valueOf(rs.getInt("AGE"))));
-			System.out.print(leftJustify(rs.getString("ADDRESS")));
-			System.out.print(leftJustify(String.valueOf(rs.getDouble("SALARY"))));
-			System.out.println("");
+			writeRows(rs);
 		}
 	}
 
