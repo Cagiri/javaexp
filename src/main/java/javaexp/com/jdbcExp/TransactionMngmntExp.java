@@ -1,11 +1,16 @@
 package javaexp.com.jdbcExp;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Statement;
+
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
 
 public class TransactionMngmntExp {
 
@@ -16,22 +21,24 @@ public class TransactionMngmntExp {
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}
-
+		
 		Connection c = null;
 		Statement st = null;
 		try {
 			c = DriverManager.getConnection("jdbc:sqlite:test.db");
+			System.out.println(c.getMetaData().supportsSavepoints());
 			c.setAutoCommit(false);
-			c.rollback();
 
 			st = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			st.executeUpdate("insert into company (id,name,age,address,salary) values (11,'first name1',55,'anywhere11',12500)");
-			st.executeUpdate("insert into company (id,name,age,address,salary) values (14,'first name4',56,'anywhere14',13500)");
+			st.executeUpdate("insert into company (id,name,age,address,salary) values (13,'first name13',57,'anywhere13',15500)");
 			
+			Savepoint s = c.setSavepoint();
+			st.executeUpdate("insert into company (id,name,age,address,salary) values (14,'first name14',57,'anywhere14',15500)");
+			
+			st.executeUpdate("insert into company (id,name,age,address,salary) values (15,'first name15',57,'anywhere15',15500)");
+			c.rollback(s);
+			c.releaseSavepoint(s);
 			c.commit();
-			
-			st.executeUpdate("insert into company (id,name,age,address,salary) values (15,'first name5',57,'anywhere15',15500)");
-			c.rollback();
 			
 			FirstSqlLiteExp.selectRowCount(c,c.createStatement());
 			
