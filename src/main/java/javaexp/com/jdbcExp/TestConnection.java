@@ -22,10 +22,11 @@ public class TestConnection {
 		try {
 			// specify connection to three nodes of aurora
 			String driver = "com.mysql.jdbc.Driver";
-			String connection = "jdbc:mysql://awsdb.cubj2gkt5gv5.us-west-2.rds.amazonaws.com:3306/awstestdb";
-			String user = "awsuser";
+			String connection = "jdbc:mysql://dbwebexp.cluster-cubj2gkt5gv5.us-west-2.rds.amazonaws.com:3306/dbWebExpTest";
+			String user = "cagiri";
 			String password = "111222333a";
 			Class.forName(driver);
+
 			Connection con = DriverManager.getConnection(connection, user, password);
 			if (!con.isClosed()) {
 				con.close();
