@@ -1,7 +1,10 @@
 package javaexp.com.jsonExp;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.codehaus.jackson.JsonParseException;
@@ -13,17 +16,22 @@ public class JsonBasicExp {
 
 	public static void main(String[] args) throws Exception {
 
-//		jsonToObj();
+		jsonToObj();
 
 //		objectToJson();
 	}
 
 	private static void jsonToObj() throws IOException, JsonParseException, JsonMappingException {
 		ObjectMapper mapper = new ObjectMapper();
-		String jsonInString = "{\"name\":\"test Name\",\"age\":33,\"messages\":[\"hello jackson 1\",\"hello jackson 2\",\"hello jackson 3\"]}";
-
+		String jsonInString = "{\"name\":\"test Name\",\"birthDate\":\"01/01/2011\",\"age\":33,\"messages\":[\"hello jackson 1\",\"hello jackson 2\",\"hello jackson 3\"]}";
+		
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		mapper.setDateFormat(df);
+		
 		User user = mapper.readValue(jsonInString, User.class);
+		
 		System.out.println(user.getName());
+		System.out.println(user.getBirthDate());
 		System.out.println(user.getAge());
 		System.out.println(user.getMessages());
 	}

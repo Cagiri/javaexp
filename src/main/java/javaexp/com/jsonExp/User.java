@@ -1,11 +1,13 @@
 package javaexp.com.jsonExp;
 
+import java.util.Date;
 import java.util.List;
 
 public class User {
 
 	private String name;
 	private int age;
+	private Date birthDate;
 	private List<String> messages;
 	
 	
@@ -26,6 +28,12 @@ public class User {
 	}
 	public void setMessages(List<String> messages) {
 		this.messages = messages;
+	}
+	public Date getBirthDate() {
+		return birthDate;
+	}
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	
