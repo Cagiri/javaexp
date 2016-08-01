@@ -16,7 +16,7 @@ public class JsonBasicExp {
 
 	public static void main(String[] args) throws Exception {
 
-		jsonToObj();
+//		jsonToObj();
 
 //		objectToJson();
 	}
